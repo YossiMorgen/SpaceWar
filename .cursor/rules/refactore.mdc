@@ -1,0 +1,4 @@
+---
+alwaysApply: true
+---
+do not be afraid to refactor and break a component into multiple components or remove old logic or move things into services 

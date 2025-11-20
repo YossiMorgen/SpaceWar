@@ -1,0 +1,114 @@
+<div #rendererContainer class="game-container"></div>
+
+<div id="ui-layer">
+  <div id="score">Score: {{ scoreService.currentScore$ | async | number:'1.0-0' }}</div>
+  
+  @if (isPlaying) {
+    <button mat-fab id="pause-button" (click)="togglePause()" [class.paused]="isPaused" color="primary">
+      <mat-icon>{{ isPaused ? 'play_arrow' : 'pause' }}</mat-icon>
+    </button>
+    
+    @if (isMobile) {
+      <button 
+        mat-fab
+        id="shoot-button" 
+        (touchstart)="onShootTouchStart($event)"
+        (touchend)="onShootTouchEnd($event)"
+        (touchcancel)="onShootTouchEnd($event)"
+        color="accent">
+        <mat-icon>gps_fixed</mat-icon>
+      </button>
+    }
+    
+    <div id="health-bar">
+      @for (heart of getHealthHearts(); track $index) {
+        <span class="heart" [class.empty]="!heart">❤️</span>
+      }
+    </div>
+    
+    @if ((comboSystem.combo$ | async)?.combo! > 0) {
+      <div id="combo-display">
+        <div class="combo-count">COMBO x{{ (comboSystem.combo$ | async)?.combo }}</div>
+        <div class="combo-multiplier">x{{ (comboSystem.combo$ | async)?.multiplier! | number:'1.1-1' }}</div>
+      </div>
+    }
+    
+    @if (bossManager.hasActiveBoss() && bossManager.getBoss()) {
+      <div id="boss-health">
+        <div class="boss-label">BOSS</div>
+        <mat-progress-bar 
+          mode="determinate" 
+          [value]="(bossManager.getBoss()!.health / bossManager.getBoss()!.maxHealth) * 100"
+          class="boss-health-bar">
+        </mat-progress-bar>
+      </div>
+    }
+    
+    <div id="active-effects">
+      @for (effect of player.effectManager.effects$ | async; track effect.type) {
+        <div class="effect-item" [title]="getEffectName(effect.type)">
+          <span class="effect-icon">{{ getEffectIcon(effect.type) }}</span>
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="effect.getProgress() * 100"
+            class="effect-timer">
+          </mat-progress-bar>
+        </div>
+      }
+    </div>
+    
+    @if (isPaused) {
+      <mat-card class="screen">
+        <mat-card-header>
+          <mat-card-title>PAUSED</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Press the pause button to resume</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+
+  @if (!isPlaying && !isGameOver) {
+    <mat-card id="start-screen" class="screen">
+      <mat-card-header>
+        <mat-card-title>COSMIC RACER</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (isMobile) {
+          <p>Drag to Move</p>
+          <p>Tap Shoot Button to Fire</p>
+        } @else {
+          <p>Use Arrow Keys or WASD to Move</p>
+          <p>Spacebar to Shoot</p>
+        }
+        <p>Avoid Red Ships - Collect Yellow Stars</p>
+        @if ((scoreService.previousScore$ | async)! > 0) {
+          <p class="previous-score">Previous Score: {{ scoreService.previousScore$ | async | number:'1.0-0' }}</p>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="startGame()">START MISSION</button>
+        <button mat-button id="game-objects-toggle" (click)="toggleGameObjectsMenu()">
+          <mat-icon>info</mat-icon>
+          GAME OBJECTS GUIDE
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+
+  @if (isGameOver) {
+    <mat-card  class="screen">
+      <mat-card-header>
+        <mat-card-title>MISSION FAILED</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Final Score: {{ scoreService.finalScore$ | async | number:'1.0-0' }}</p>
+      </mat-card-content>
+      <mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="startGame()">RETRY</button>
+      </mat-dialog-actions>
+    </mat-card>
+  }
+</div>
+

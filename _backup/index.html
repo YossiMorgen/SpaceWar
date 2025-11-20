@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmic Racer</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="ui-layer">
+        <div id="score-board">SCORE: <span id="score">0</span></div>
+      </div>
+      
+      <div id="start-screen">
+        <h1>Cosmic Racer</h1>
+        <button id="start-btn">Start Game</button>
+        <p style="margin-top: 20px; color: #aaa;">Use Arrow Keys or A/D to Move</p>
+      </div>
+
+      <div id="game-over-screen" class="hidden">
+        <h1>Game Over</h1>
+        <p style="font-size: 2rem; margin-bottom: 20px;">Final Score: <span id="final-score">0</span></p>
+        <button id="restart-btn">Try Again</button>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

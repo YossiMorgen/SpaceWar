@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>GAME OBJECTS GUIDE</h2>
+<mat-dialog-content class="dialog-content">
+  <div class="objects-container">
+    @for (category of gameObjects; track category.category) {
+      <mat-expansion-panel class="category-section">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="category-title">{{ category.category }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="objects-list">
+          @for (item of category.items; track item.name) {
+            <div class="object-item">
+              <div class="object-header" (click)="item.expanded = !item.expanded">
+                <span class="object-icon">{{ item.icon }}</span>
+                <span class="object-name">{{ item.name }}</span>
+                <mat-icon class="expand-icon">{{ item.expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </div>
+              @if (item.expanded) {
+                <div class="object-description">
+                  {{ item.description }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </mat-expansion-panel>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="close()">CLOSE GUIDE</button>
+</mat-dialog-actions>
+

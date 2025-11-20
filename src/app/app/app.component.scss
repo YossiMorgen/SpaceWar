@@ -1,0 +1,482 @@
+.game-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  touch-action: none;
+}
+
+#ui-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  text-shadow: 0 0 10px #00ffff;
+  touch-action: none;
+}
+
+#score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  pointer-events: auto;
+}
+
+#pause-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  pointer-events: auto;
+  z-index: 20;
+  
+  ::ng-deep .mat-mdc-fab {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 20px #00ffff;
+      transform: scale(1.1);
+    }
+  }
+
+  &.paused ::ng-deep .mat-mdc-fab {
+    border-color: #ffff00;
+    color: #ffff00;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+
+    &:hover {
+      background-color: rgba(255, 255, 0, 0.2);
+      box-shadow: 0 0 20px #ffff00;
+    }
+  }
+}
+
+#health-bar {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  display: flex;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  pointer-events: auto;
+  
+  .heart {
+    font-size: 24px;
+    opacity: 1;
+    transition: opacity 0.3s;
+    
+    &.empty {
+      opacity: 0.3;
+    }
+  }
+}
+
+#combo-display {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+  pointer-events: auto;
+  
+  .combo-count {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 0 0 10px #ffff00;
+  }
+  
+  .combo-multiplier {
+    font-size: 16px;
+    color: #ff8800;
+    text-shadow: 0 0 8px #ff8800;
+  }
+}
+
+#active-effects {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+  .effect-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 255, 0.5);
+    min-width: 50px;
+    pointer-events: auto;
+    
+    .effect-icon {
+      font-size: 24px;
+    }
+    
+    .effect-timer {
+      width: 100%;
+      height: 4px;
+      
+      ::ng-deep .mat-mdc-progress-bar {
+        height: 4px;
+        
+        .mdc-linear-progress__buffer {
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .mdc-linear-progress__bar-inner {
+          background: linear-gradient(to right, #00ffff, #0088ff);
+          box-shadow: 0 0 5px #00ffff;
+        }
+      }
+    }
+  }
+}
+
+#boss-health {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 25px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 0, 136, 0.5);
+  box-shadow: 0 0 15px rgba(255, 0, 136, 0.4);
+  pointer-events: auto;
+  
+  .boss-label {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff0088;
+    text-shadow: 0 0 10px #ff0088;
+    letter-spacing: 3px;
+  }
+  
+  .boss-health-bar {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    
+    ::ng-deep .mat-mdc-progress-bar {
+      height: 20px;
+      border-radius: 10px;
+      border: 2px solid #ff0088;
+      box-shadow: 0 0 10px #ff0088;
+      
+      .mdc-linear-progress__buffer {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      
+      .mdc-linear-progress__bar-inner {
+        background: linear-gradient(to right, #ff0088, #ff44aa);
+        box-shadow: 0 0 10px #ff0088;
+      }
+    }
+  }
+}
+
+#pause-screen {
+  pointer-events: none;
+  
+  ::ng-deep .mat-mdc-card {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 60px !important;
+    min-width: 500px;
+  }
+  
+  ::ng-deep .mat-mdc-card-header {
+    padding: 0 !important;
+    margin-bottom: 20px;
+  }
+  
+  ::ng-deep .mat-mdc-card-title {
+    color: #ffff00 !important;
+    text-shadow: 0 0 20px #ffff00;
+    font-size: 56px !important;
+  }
+  
+  ::ng-deep .mat-mdc-card-content {
+    padding: 0 !important;
+    
+    p {
+      color: #aaa;
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  text-align: center;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  ::ng-deep .mat-mdc-card {
+    background: transparent !important;
+    padding: 60px !important;
+    min-width: 500px;
+  }
+
+  ::ng-deep .mat-mdc-card-header {
+    padding: 0 !important;
+    margin-bottom: 20px;
+  }
+
+  ::ng-deep .mat-mdc-card-title {
+    font-size: 56px !important;
+    margin-bottom: 0 !important;
+    background: linear-gradient(to bottom, #fff, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  ::ng-deep .mat-mdc-card-content {
+    padding: 0 !important;
+    
+    p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #aaa;
+    }
+  }
+
+  ::ng-deep .mat-mdc-card-actions {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  ::ng-deep .mat-mdc-button,
+  ::ng-deep .mat-mdc-raised-button {
+    background: transparent !important;
+    color: #00ffff !important;
+    border: 2px solid #00ffff !important;
+    padding: 18px 50px !important;
+    font-size: 26px !important;
+    font-family: inherit !important;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 10px !important;
+    min-width: auto !important;
+
+    &:hover {
+      background: #00ffff !important;
+      color: #000 !important;
+      box-shadow: 0 0 20px #00ffff;
+    }
+  }
+
+  #game-objects-toggle {
+    font-size: 18px !important;
+    padding: 12px 30px !important;
+    margin-top: 20px !important;
+    
+    ::ng-deep .mat-icon {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+  }
+}
+
+#shoot-button {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  pointer-events: auto;
+  z-index: 20;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  ::ng-deep .mat-mdc-fab {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 3px solid #00ffff;
+    color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    transition: all 0.2s;
+
+    &:active {
+      background-color: rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 25px #00ffff;
+      transform: scale(0.95);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #score {
+    font-size: 20px;
+    top: 15px;
+    left: 15px;
+    padding: 10px 15px;
+  }
+
+  #pause-button {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    top: 15px;
+    right: 15px;
+  }
+
+  #health-bar {
+    top: 15px;
+    right: 85px;
+    padding: 8px 12px;
+    
+    .heart {
+      font-size: 28px;
+    }
+  }
+
+  #combo-display {
+    top: 50px;
+    left: 15px;
+    padding: 10px 15px;
+    
+    .combo-count {
+      font-size: 18px;
+    }
+    
+    .combo-multiplier {
+      font-size: 14px;
+    }
+  }
+
+  #active-effects {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 8px;
+    
+    .effect-item {
+      padding: 6px;
+      min-width: 45px;
+      
+      .effect-icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  #boss-health {
+    top: 70px;
+    min-width: 250px;
+    padding: 12px 20px;
+    
+    .boss-label {
+      font-size: 20px;
+    }
+    
+    .boss-health-bar {
+      height: 18px;
+    }
+  }
+
+  .screen {
+    max-width: 90vw;
+    
+    ::ng-deep .mat-mdc-card {
+      padding: 40px 25px !important;
+      min-width: auto !important;
+    }
+    
+    ::ng-deep .mat-mdc-card-title {
+      font-size: 42px !important;
+      margin-bottom: 15px !important;
+    }
+
+    ::ng-deep .mat-mdc-card-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    ::ng-deep .mat-mdc-button,
+    ::ng-deep .mat-mdc-raised-button {
+      padding: 15px 35px !important;
+      font-size: 20px !important;
+      margin: 8px !important;
+      min-height: 44px !important;
+    }
+
+    #game-objects-toggle {
+      font-size: 18px !important;
+      padding: 12px 28px !important;
+    }
+  }
+
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+

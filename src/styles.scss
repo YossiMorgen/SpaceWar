@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  font-family: 'Orbitron', sans-serif;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mat-mdc-card {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: #fff !important;
+}
+
+.mat-mdc-card-header {
+  padding: 0 !important;
+}
+
+.mat-mdc-card-content {
+  padding: 0 !important;
+}
+
+.mat-mdc-card-actions {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.mat-expansion-panel {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: #fff !important;
+}
+
+.mat-expansion-panel-header {
+  color: #fff !important;
+}
+
+.mat-expansion-panel-body {
+  padding: 16px !important;
+}
+
+.mat-mdc-fab {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: #00ffff !important;
+}
+
+.mat-mdc-raised-button {
+  background-color: transparent !important;
+}
+
+::ng-deep .game-objects-dialog {
+  .mat-mdc-dialog-container {
+    background-color: transparent !important;
+    border: 2px solid #00ffff;
+    border-radius: 10px;
+    box-shadow: 0 0 30px #00ffff;
+    padding: 30px !important;
+    max-width: 900px !important;
+  }
+  
+  .mat-mdc-dialog-title {
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff;
+  }
+  
+  .mat-mdc-dialog-content {
+    color: #fff;
+    background: transparent !important;
+  }
+  
+  .mat-mdc-dialog-surface {
+    background-color: transparent !important;
+  }
+}

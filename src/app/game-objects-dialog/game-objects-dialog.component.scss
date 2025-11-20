@@ -1,0 +1,161 @@
+h2 {
+  font-size: 32px;
+  margin-bottom: 25px;
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff;
+  text-align: center;
+}
+
+.dialog-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 20px !important;
+  background: transparent;
+}
+
+.objects-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+  
+  ::ng-deep .mat-expansion-panel {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    
+    .mat-expansion-panel-header {
+      padding: 15px !important;
+      background-color: transparent !important;
+      
+      &:hover {
+        background-color: rgba(0, 255, 255, 0.1) !important;
+      }
+      
+      .category-title {
+        font-size: 22px;
+        color: #00ffff !important;
+        text-shadow: 0 0 10px #00ffff;
+      }
+    }
+    
+    .mat-expansion-panel-body {
+      padding: 15px !important;
+    }
+  }
+  
+  .objects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    .object-item {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 5px;
+      overflow: hidden;
+      
+      .object-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-left: 3px solid transparent;
+        
+        &:hover {
+          background: rgba(0, 255, 255, 0.1);
+          border-left-color: #00ffff;
+        }
+        
+        .object-icon {
+          font-size: 24px;
+          min-width: 30px;
+        }
+        
+        .object-name {
+          flex: 1;
+          font-size: 18px;
+          font-weight: bold;
+          color: #fff;
+        }
+        
+        .expand-icon {
+          color: #00ffff !important;
+          font-size: 20px;
+          transition: transform 0.2s;
+          width: 20px;
+          height: 20px;
+        }
+      }
+      
+      .object-description {
+        padding: 15px 20px 15px 57px;
+        color: #ccc;
+        font-size: 15px;
+        line-height: 1.6;
+        background: rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(0, 255, 255, 0.2);
+        animation: slideDown 0.3s ease-out;
+      }
+    }
+  }
+}
+
+mat-dialog-actions {
+  justify-content: center;
+  padding: 20px 0 0 0 !important;
+  margin: 0 !important;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .objects-container {
+    ::ng-deep .mat-expansion-panel {
+      .mat-expansion-panel-header {
+        padding: 12px !important;
+        
+        .category-title {
+          font-size: 18px;
+        }
+      }
+    }
+    
+    .objects-list {
+      .object-header {
+        padding: 10px 12px;
+        
+        .object-icon {
+          font-size: 20px;
+          min-width: 25px;
+        }
+        
+        .object-name {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  
+  .object-description {
+    padding: 12px 15px 12px 50px;
+    font-size: 14px;
+  }
+}
+
